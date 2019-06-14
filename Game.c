@@ -13,17 +13,22 @@ GtkWidget *label;
 
 int timer;
 
-int score=0,hit=0,miss=0;
+int score=0,hit=0,miss=0, lives = 3;
 
 //*************************
-GtkWidget *mario_wid, *donkey, *barrel1;
+GtkWidget *mario_wid, *donkey, *barrel_normal, *barrel_freefall, *barrel_mix;
 int x_pos=0;
 int y_pos=500;
 int mario_tag=0;
 
 int x_cord = 105;
 int y_cord = 55;
+
+int x_cord_free = 105;
+int y_cord_free = 55;
+
 int forward = 0;
+int forward_free = 0;
 
 GtkWidget *xpm_create( GtkWidget *parent,gchar *xpm_filename)
 {
@@ -53,7 +58,7 @@ int move_barrel_normal(GtkWidget *data)
         y_cord = 55;
         x_cord = 105;
 
-        gtk_fixed_put (GTK_FIXED (fixed), barrel1 , x_cord, y_cord);
+        gtk_fixed_put (GTK_FIXED (fixed), barrel_normal , x_cord, y_cord);
     }
 
     if(forward == 0){
@@ -61,17 +66,17 @@ int move_barrel_normal(GtkWidget *data)
             if(210 < y_cord && y_cord < 215)
                 forward = 1;
             y_cord += 2;
-            gtk_fixed_move(GTK_FIXED (fixed), barrel1, x_cord, y_cord);
+            gtk_fixed_move(GTK_FIXED (fixed), barrel_normal, x_cord, y_cord);
         }
         else if(x_cord > 870 && 380 < y_cord && y_cord < 530 ){
             if(528 < y_cord && y_cord < 530)
                 forward = 1;
             y_cord += 2;
-            gtk_fixed_move(GTK_FIXED (fixed), barrel1, x_cord, y_cord);
+            gtk_fixed_move(GTK_FIXED (fixed), barrel_normal, x_cord, y_cord);
         }
         else {
             x_cord += 2;
-            gtk_fixed_move(GTK_FIXED (fixed), barrel1, x_cord, y_cord);
+            gtk_fixed_move(GTK_FIXED (fixed), barrel_normal, x_cord, y_cord);
         }
         return TRUE;
     } //backward
@@ -80,11 +85,11 @@ int move_barrel_normal(GtkWidget *data)
             if(378 < y_cord && y_cord < 380)
                 forward = 0;
             y_cord += 2;
-            gtk_fixed_move(GTK_FIXED (fixed), barrel1, x_cord, y_cord);
+            gtk_fixed_move(GTK_FIXED (fixed), barrel_normal, x_cord, y_cord);
         }
         else {
             x_cord -= 2;
-            gtk_fixed_move(GTK_FIXED (fixed), barrel1, x_cord, y_cord);
+            gtk_fixed_move(GTK_FIXED (fixed), barrel_normal, x_cord, y_cord);
         }
         return TRUE;
     }
@@ -92,6 +97,52 @@ int move_barrel_normal(GtkWidget *data)
 
 }
 
+
+int move_barrel_freefall(GtkWidget *data)
+{
+    if(x_cord_free > 1000)
+    {
+        forward_free = 0;
+        y_cord_free = 55;
+        x_cord_free = 105;
+
+        gtk_fixed_put (GTK_FIXED (fixed), barrel_freefall , x_cord_free, y_cord_free);
+    }
+
+    if(forward_free == 0){
+        if(x_cord_free > 870 && 54 < y_cord_free && y_cord_free < 215 ){
+            if(210 < y_cord_free && y_cord_free < 215)
+                forward_free = 1;
+            y_cord_free += 2;
+            gtk_fixed_move(GTK_FIXED (fixed), barrel_freefall, x_cord_free, y_cord_free);
+        }
+        else if(x_cord_free > 870 && 380 < y_cord_free && y_cord_free < 530 ){
+            if(528 < y_cord_free && y_cord_free < 530)
+                forward_free = 1;
+            y_cord_free += 2;
+            gtk_fixed_move(GTK_FIXED (fixed), barrel_freefall, x_cord_free, y_cord_free);
+        }
+        else {
+            x_cord_free += 2;
+            gtk_fixed_move(GTK_FIXED (fixed), barrel_freefall, x_cord_free, y_cord_free);
+        }
+        return TRUE;
+    } //backward
+    else{
+        if(x_cord_free < 300 && 209 < y_cord_free && y_cord_free < 530 ){
+            if(528 < y_cord_free && y_cord_free < 530)
+                forward_free = 0;
+            y_cord_free += 2;
+            gtk_fixed_move(GTK_FIXED (fixed), barrel_freefall, x_cord_free, y_cord_free);
+        }
+        else {
+            x_cord_free -= 2;
+            gtk_fixed_move(GTK_FIXED (fixed), barrel_freefall, x_cord_free, y_cord_free);
+        }
+        return TRUE;
+    }
+
+}
 
 int move_mario_right(GtkWidget *data)
 {
@@ -262,13 +313,19 @@ int main( int   argc,
     gtk_widget_show(donkey);
     gtk_fixed_put (GTK_FIXED (fixed), donkey, 10, 10);
 
-    //Barril
-    barrel1= xpm_create(window, "/home/karina/CLionProjects/untitled/imgs/cask(1).png");
-    gtk_widget_show(barrel1);
-    gtk_fixed_put (GTK_FIXED (fixed), barrel1, x_cord, y_cord);
+    //Barril normal
+    barrel_normal= xpm_create(window, "/home/karina/CLionProjects/untitled/imgs/cask(1).png");
+    gtk_widget_show(barrel_normal);
+    gtk_fixed_put (GTK_FIXED (fixed), barrel_normal, x_cord, y_cord);
+
+    //Barril freefall
+    barrel_freefall= xpm_create(window, "/home/karina/CLionProjects/untitled/imgs/cask(1).png");
+    gtk_widget_show(barrel_freefall);
+    gtk_fixed_put (GTK_FIXED (fixed), barrel_freefall, x_cord_free, y_cord_free);
 
     g_signal_connect(G_OBJECT(button), "key_press_event", G_CALLBACK(key_press_cb), mario_wid);
-    timer = gtk_timeout_add (10, move_barrel_normal, barrel1);
+    timer = gtk_timeout_add (10, move_barrel_normal, barrel_normal);
+    gtk_timeout_add (10, move_barrel_freefall, barrel_freefall);
 /* Pack and show all our widgets */
     gtk_widget_show(fixed);
     gtk_container_add (GTK_CONTAINER (window), fixed);

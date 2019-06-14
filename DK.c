@@ -11,13 +11,29 @@ int timer;
 int score=0;
 
 //*************************
-GtkWidget *mario_wid;
+GtkWidget *mario_wid, *donkey, *barrel_normal, *barrel_freefall, *barrel_mix, *life1, *life2, *life3, *fire;
+GtkWidget *l1,*l2,*l3;
 int x_pos=0;
 int y_pos=500;
 int x_aux=0;
 int y_aux=500;
 int mario_tag=0;
 int speed = 10;
+int lives = 3;
+
+int x_cord = 105;
+int y_cord = 55;
+
+int x_cord_free = 105;
+int y_cord_free = 55;
+
+int forward = 0;
+int forward_free = 0;
+
+int fire_x = 105;
+int fire_y = 550;
+
+int start_fire = 0;
 
 GtkWidget *xpm_create( GtkWidget *parent,gchar *xpm_filename)
 {
@@ -37,10 +53,131 @@ GtkWidget *xpm_create( GtkWidget *parent,gchar *xpm_filename)
 
 /*--------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------
-
-
 */
+int fire_inginition(GtkWidget *data){
 
+    if(x_cord > 1000)
+    {
+        start_fire = 1;
+    }
+
+    if(start_fire == 1){
+        gtk_fixed_put (GTK_FIXED (fixed), fire , fire_x, fire_y);
+        fire_x += 5;
+    }
+}
+
+int move_barrel_normal(GtkWidget *data)
+{
+    if((y_pos == 500 && y_cord == 525 || y_pos == 335 && y_cord == 365 ||  y_pos == 185 && y_cord < 205 || y_pos == 20 && y_cord == 54) && abs(x_cord - x_pos) == 1){
+        switch (lives){
+            case 3:
+                lives = 2;
+                gtk_widget_destroy(life1);
+                break;
+            case 2:
+                lives = 1;
+                gtk_widget_destroy(life2);
+                break;
+            case 1:
+                lives = 0;
+                gtk_widget_destroy(life3);
+                game_over();
+                break;
+        }
+    }
+
+    if(x_cord > 1000)
+    {
+        forward = 0;
+        y_cord = 55;
+        x_cord = 105;
+
+        gtk_fixed_put (GTK_FIXED (fixed), barrel_normal , x_cord, y_cord);
+    }
+
+    if(forward == 0){
+        if(x_cord > 870 && 54 < y_cord && y_cord < 215 ){
+            if(205 < y_cord && y_cord < 215)
+                forward = 1;
+            y_cord += 5;
+            gtk_fixed_move(GTK_FIXED (fixed), barrel_normal, x_cord, y_cord);
+        }
+        else if(x_cord > 870 && 335 < y_cord && y_cord < 530 ){
+            if(525 < y_cord && y_cord < 530)
+                forward = 1;
+            y_cord += 5;
+            gtk_fixed_move(GTK_FIXED (fixed), barrel_normal, x_cord, y_cord);
+        }
+        else {
+            x_cord += 5;
+            gtk_fixed_move(GTK_FIXED (fixed), barrel_normal, x_cord, y_cord);
+        }
+        return TRUE;
+    } //backward
+    else{
+        if(x_cord < 100 && 209 < y_cord && y_cord < 380 ){
+            if(365 < y_cord && y_cord < 380)
+                forward = 0;
+            y_cord += 5;
+            gtk_fixed_move(GTK_FIXED (fixed), barrel_normal, x_cord, y_cord);
+        }
+        else {
+            x_cord -= 5;
+            gtk_fixed_move(GTK_FIXED (fixed), barrel_normal, x_cord, y_cord);
+        }
+        return TRUE;
+    }
+
+
+}
+
+
+int move_barrel_freefall(GtkWidget *data)
+{
+    if(x_cord_free < 2)
+    {
+        forward_free = 0;
+        y_cord_free = 55;
+        x_cord_free = 105;
+
+        gtk_fixed_put (GTK_FIXED (fixed), barrel_freefall , x_cord_free, y_cord_free);
+    }
+
+    if(forward_free == 0){
+        if(x_cord_free > 870 && 54 < y_cord_free && y_cord_free < 215 ){
+            if(205 < y_cord_free && y_cord_free < 215)
+                forward_free = 1;
+            y_cord_free += 5;
+            gtk_fixed_move(GTK_FIXED (fixed), barrel_freefall, x_cord_free, y_cord_free);
+        }
+        else if(x_cord_free > 870 && 380 < y_cord_free && y_cord_free < 530 ){
+            if(528 < y_cord_free && y_cord_free < 530)
+                forward_free = 1;
+            y_cord_free += 5;
+            gtk_fixed_move(GTK_FIXED (fixed), barrel_freefall, x_cord_free, y_cord_free);
+        }
+        else {
+            x_cord_free += 5;
+            gtk_fixed_move(GTK_FIXED (fixed), barrel_freefall, x_cord_free, y_cord_free);
+        }
+        return TRUE;
+    } //backward
+    else{
+        if(x_cord_free < 300 && 185 < y_cord_free && y_cord_free < 530 ){
+            if(528 < y_cord_free && y_cord_free < 530)
+                forward_free = 0;
+            y_cord_free += 5;
+            gtk_fixed_move(GTK_FIXED (fixed), barrel_freefall, x_cord_free, y_cord_free);
+        }
+        else {
+            x_cord_free -= 5;
+            gtk_fixed_move(GTK_FIXED (fixed), barrel_freefall, x_cord_free, y_cord_free);
+        }
+        return TRUE;
+    }
+
+}
 
 int move_mario_start(GtkWidget *data)
 {
@@ -73,7 +210,7 @@ int move_mario_jumpu(GtkWidget *data)
 }
 int move_mario_right(GtkWidget *data)
 {
-   x_pos+=60;
+   x_pos+=15;
    gtk_fixed_move (GTK_FIXED (fixed), data , x_pos, y_pos);
    g_message("%s, %d","XPOS: ",x_pos);
    g_message("%s, %d","YPOS: ",y_pos);
@@ -241,7 +378,7 @@ int main( int   argc,
     button = gtk_button_new_with_label("SHOOT!");
     label=gtk_label_new("SCORE : 0");
     gtk_widget_show(label);
-    bckgrnd_wid= xpm_create(window, "background.png");
+    bckgrnd_wid= xpm_create(window, "/home/karina/CLionProjects/untitled/background.png");
     gtk_widget_set_usize(GTK_WIDGET(bckgrnd_wid),1000,600);
     gtk_widget_show(bckgrnd_wid);
     gtk_fixed_put (GTK_FIXED (fixed), button, 200, 200);
@@ -250,12 +387,52 @@ int main( int   argc,
     gtk_widget_set_usize(GTK_WIDGET(label),100,100);
     gtk_fixed_put (GTK_FIXED (fixed), label, 20, 20);
     //Mario
-    mario_wid= xpm_create(window, "mario.png");
+    mario_wid= xpm_create(window, "/home/karina/CLionProjects/untitled/mario.png");
     gtk_widget_show(mario_wid);
     gtk_fixed_put (GTK_FIXED (fixed), mario_wid, x_pos, 500);
+
+    //DK
+    donkey= xpm_create(window, "/home/karina/CLionProjects/untitled/imgs/donkeykong1_2.png");
+    gtk_widget_show(donkey);
+    gtk_fixed_put (GTK_FIXED (fixed), donkey, 10, 10);
+
+    //Barril normal
+    barrel_normal= xpm_create(window, "/home/karina/CLionProjects/untitled/imgs/cask(1).png");
+    gtk_widget_show(barrel_normal);
+    gtk_fixed_put (GTK_FIXED (fixed), barrel_normal, x_cord, y_cord);
+
+    //Barril freefall
+    barrel_freefall= xpm_create(window, "/home/karina/CLionProjects/untitled/imgs/cask(1).png");
+    gtk_widget_show(barrel_freefall);
+    gtk_fixed_put (GTK_FIXED (fixed), barrel_freefall, x_cord_free, y_cord_free);
+
+    //Vidas
+    life1 = xpm_create(window, "/home/karina/CLionProjects/untitled/imgs/life_white.png");
+    gtk_widget_show(life1);
+    gtk_fixed_put (GTK_FIXED (fixed), life1, 850, 20);
+
+    life2 = xpm_create(window, "/home/karina/CLionProjects/untitled/imgs/life_white.png");
+    gtk_widget_show(life2);
+    gtk_fixed_put (GTK_FIXED (fixed), life2, 900, 20);
+
+    life3 = xpm_create(window, "/home/karina/CLionProjects/untitled/imgs/life_white.png");
+    gtk_widget_show(life3);
+    gtk_fixed_put (GTK_FIXED (fixed), life3, 950, 20);
+
+    //fuego
+    fire = xpm_create(window, "/home/karina/CLionProjects/untitled/imgs/fire.png");
+    gtk_widget_show(fire);
+
     //************************
 
     g_signal_connect(G_OBJECT(button), "key_press_event", G_CALLBACK(key_press_cb), mario_wid);
+
+    //Barriles automáticos
+    gtk_timeout_add (10, move_barrel_normal, barrel_normal);
+    gtk_timeout_add (10, move_barrel_freefall, barrel_freefall);
+
+    //fuego
+    gtk_timeout_add (20, fire_inginition, fire);
 
 /* Pack and show all our widgets */
     gtk_widget_show(fixed);

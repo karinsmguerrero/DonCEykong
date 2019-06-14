@@ -57,38 +57,38 @@ include CMakeFiles/untitled.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/untitled.dir/flags.make
 
-CMakeFiles/untitled.dir/Game.c.o: CMakeFiles/untitled.dir/flags.make
-CMakeFiles/untitled.dir/Game.c.o: ../Game.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/karina/CLionProjects/untitled/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/untitled.dir/Game.c.o"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/untitled.dir/Game.c.o   -c /home/karina/CLionProjects/untitled/Game.c
+CMakeFiles/untitled.dir/DK.c.o: CMakeFiles/untitled.dir/flags.make
+CMakeFiles/untitled.dir/DK.c.o: ../DK.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/karina/CLionProjects/untitled/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/untitled.dir/DK.c.o"
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/untitled.dir/DK.c.o   -c /home/karina/CLionProjects/untitled/DK.c
 
-CMakeFiles/untitled.dir/Game.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/untitled.dir/Game.c.i"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/karina/CLionProjects/untitled/Game.c > CMakeFiles/untitled.dir/Game.c.i
+CMakeFiles/untitled.dir/DK.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/untitled.dir/DK.c.i"
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/karina/CLionProjects/untitled/DK.c > CMakeFiles/untitled.dir/DK.c.i
 
-CMakeFiles/untitled.dir/Game.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/untitled.dir/Game.c.s"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/karina/CLionProjects/untitled/Game.c -o CMakeFiles/untitled.dir/Game.c.s
+CMakeFiles/untitled.dir/DK.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/untitled.dir/DK.c.s"
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/karina/CLionProjects/untitled/DK.c -o CMakeFiles/untitled.dir/DK.c.s
 
-CMakeFiles/untitled.dir/Game.c.o.requires:
+CMakeFiles/untitled.dir/DK.c.o.requires:
 
-.PHONY : CMakeFiles/untitled.dir/Game.c.o.requires
+.PHONY : CMakeFiles/untitled.dir/DK.c.o.requires
 
-CMakeFiles/untitled.dir/Game.c.o.provides: CMakeFiles/untitled.dir/Game.c.o.requires
-	$(MAKE) -f CMakeFiles/untitled.dir/build.make CMakeFiles/untitled.dir/Game.c.o.provides.build
-.PHONY : CMakeFiles/untitled.dir/Game.c.o.provides
+CMakeFiles/untitled.dir/DK.c.o.provides: CMakeFiles/untitled.dir/DK.c.o.requires
+	$(MAKE) -f CMakeFiles/untitled.dir/build.make CMakeFiles/untitled.dir/DK.c.o.provides.build
+.PHONY : CMakeFiles/untitled.dir/DK.c.o.provides
 
-CMakeFiles/untitled.dir/Game.c.o.provides.build: CMakeFiles/untitled.dir/Game.c.o
+CMakeFiles/untitled.dir/DK.c.o.provides.build: CMakeFiles/untitled.dir/DK.c.o
 
 
 # Object files for target untitled
 untitled_OBJECTS = \
-"CMakeFiles/untitled.dir/Game.c.o"
+"CMakeFiles/untitled.dir/DK.c.o"
 
 # External object files for target untitled
 untitled_EXTERNAL_OBJECTS =
 
-untitled: CMakeFiles/untitled.dir/Game.c.o
+untitled: CMakeFiles/untitled.dir/DK.c.o
 untitled: CMakeFiles/untitled.dir/build.make
 untitled: CMakeFiles/untitled.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/karina/CLionProjects/untitled/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking C executable untitled"
@@ -99,7 +99,7 @@ CMakeFiles/untitled.dir/build: untitled
 
 .PHONY : CMakeFiles/untitled.dir/build
 
-CMakeFiles/untitled.dir/requires: CMakeFiles/untitled.dir/Game.c.o.requires
+CMakeFiles/untitled.dir/requires: CMakeFiles/untitled.dir/DK.c.o.requires
 
 .PHONY : CMakeFiles/untitled.dir/requires
 

@@ -15,6 +15,52 @@ int score=0,hit=0,miss=0;
 
 int lives = 3;
 
+int move_barrel_freefall(GtkWidget *data)
+{
+    if(x_cord_free > 1000)
+    {
+        forward = 0;
+        y_cord_free = 55;
+        x_cord_free = 105;
+
+        gtk_fixed_put (GTK_FIXED (fixed), barrel_freefall , x_cord_free, y_cord_free);
+    }
+
+    if(forward == 0){
+        if(x_cord_free > 870 && 54 < y_cord_free && y_cord_free < 215 ){
+            if(210 < y_cord_free && y_cord_free < 215)
+                forward = 1;
+            y_cord += 2;
+            gtk_fixed_move(GTK_FIXED (fixed), barrel_freefall, x_cord, y_cord);
+        }
+        else if(x_cord > 870 && 380 < y_cord && y_cord < 530 ){
+            if(528 < y_cord && y_cord < 530)
+                forward = 1;
+            y_cord += 2;
+            gtk_fixed_move(GTK_FIXED (fixed), barrel_freefall, x_cord, y_cord);
+        }
+        else {
+            x_cord += 2;
+            gtk_fixed_move(GTK_FIXED (fixed), barrel_freefall, x_cord, y_cord);
+        }
+        return TRUE;
+    } //backward
+    else{
+        if(x_cord < 300 && 209 < y_cord && y_cord < 530 ){
+            if(528 < y_cord && y_cord < 530)
+                forward = 0;
+            y_cord += 2;
+            gtk_fixed_move(GTK_FIXED (fixed), barrel_freefall, x_cord, y_cord);
+        }
+        else {
+            x_cord -= 2;
+            gtk_fixed_move(GTK_FIXED (fixed), barrel_freefall, x_cord, y_cord);
+        }
+        return TRUE;
+    }
+
+
+}
 
 GtkWidget *xpm_create( GtkWidget *parent,gchar *xpm_filename)
 {

@@ -123,32 +123,32 @@ untitled/fast:
 	$(MAKE) -f CMakeFiles/untitled.dir/build.make CMakeFiles/untitled.dir/build
 .PHONY : untitled/fast
 
-Game.o: Game.c.o
+DK.o: DK.c.o
 
-.PHONY : Game.o
+.PHONY : DK.o
 
 # target to build an object file
-Game.c.o:
-	$(MAKE) -f CMakeFiles/untitled.dir/build.make CMakeFiles/untitled.dir/Game.c.o
-.PHONY : Game.c.o
+DK.c.o:
+	$(MAKE) -f CMakeFiles/untitled.dir/build.make CMakeFiles/untitled.dir/DK.c.o
+.PHONY : DK.c.o
 
-Game.i: Game.c.i
+DK.i: DK.c.i
 
-.PHONY : Game.i
+.PHONY : DK.i
 
 # target to preprocess a source file
-Game.c.i:
-	$(MAKE) -f CMakeFiles/untitled.dir/build.make CMakeFiles/untitled.dir/Game.c.i
-.PHONY : Game.c.i
+DK.c.i:
+	$(MAKE) -f CMakeFiles/untitled.dir/build.make CMakeFiles/untitled.dir/DK.c.i
+.PHONY : DK.c.i
 
-Game.s: Game.c.s
+DK.s: DK.c.s
 
-.PHONY : Game.s
+.PHONY : DK.s
 
 # target to generate assembly for a file
-Game.c.s:
-	$(MAKE) -f CMakeFiles/untitled.dir/build.make CMakeFiles/untitled.dir/Game.c.s
-.PHONY : Game.c.s
+DK.c.s:
+	$(MAKE) -f CMakeFiles/untitled.dir/build.make CMakeFiles/untitled.dir/DK.c.s
+.PHONY : DK.c.s
 
 # Help Target
 help:
@@ -159,9 +159,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... untitled"
-	@echo "... Game.o"
-	@echo "... Game.i"
-	@echo "... Game.s"
+	@echo "... DK.o"
+	@echo "... DK.i"
+	@echo "... DK.s"
 .PHONY : help
 
 
