@@ -6,8 +6,6 @@ GtkWidget *bckgrnd_wid,*archr_wid,*arrow_wid,*balloon_wid,*burst_wid;
 
 GtkWidget *label;
 int timer;
-
-
 int score=0;
 
 //*************************
@@ -74,14 +72,24 @@ int move_barrel_normal(GtkWidget *data) {
             case 3:
                 lives = 2;
                 gtk_widget_destroy(life1);
+                y_pos = 500;
+                x_pos = 0;
+                gtk_fixed_put(GTK_FIXED (fixed), mario_wid, x_pos, y_pos);
                 break;
             case 2:
                 lives = 1;
                 gtk_widget_destroy(life2);
+                y_pos = 500;
+                x_pos = 0;
+                gtk_fixed_put(GTK_FIXED (fixed), mario_wid, x_pos, y_pos);
                 break;
             case 1:
                 lives = 0;
                 gtk_widget_destroy(life3);
+                y_pos = 500;
+                x_pos = 0;
+                gtk_fixed_put(GTK_FIXED (fixed), mario_wid, x_pos, y_pos);
+                game_over();
                 break;
         }
     }
@@ -128,6 +136,7 @@ int move_barrel_normal(GtkWidget *data) {
 
 int move_barrel_freefall(GtkWidget *data)
 {
+    g_message("%s, %d","JUUUUMP free: ",y_cord_free);
     //muere mario
     if (y_pos == 500 && y_cord == 530 && x_pos == x_cord || y_pos == 335 && y_cord == 375 && x_pos == x_cord || y_pos == 185 && y_cord < 215 && x_pos == x_cord|| y_pos == 20 && y_cord == 55 && x_pos == x_cord) {
         switch (lives) {
@@ -151,6 +160,7 @@ int move_barrel_freefall(GtkWidget *data)
                 y_pos = 500;
                 x_pos = 0;
                 gtk_fixed_put(GTK_FIXED (fixed), mario_wid, x_pos, y_pos);
+                game_over();
                 break;
         }
     }
@@ -322,6 +332,57 @@ gint key_press_cb(GtkWidget *widget, GdkEventKey *kevent, gpointer data)  {
 }
 //**************************************************************
 
+
+
+void set_score()
+{
+char score_arr[5],point[12];
+sprintf (score_arr, "%d", (int) score);
+char *lab="SCORE : ";
+strcpy(point,lab);
+strcat(point,score_arr);
+gtk_label_set(GTK_LABEL(label),&point);
+}
+
+void restart(GtkWidget *wid, GtkWidget *data)
+{
+gtk_widget_destroy(data);
+score=0;
+set_score();
+x_pos=0;
+y_pos=500;
+    x_cord = 105;
+    y_cord = 55;
+
+     x_cord_free = 105;
+     y_cord_free = 55;
+
+     forward = 0;
+     forward_free = 0;
+
+     fire_x = 105;
+     fire_y = 550;
+
+     start_fire = 0;
+
+    gtk_fixed_put(GTK_FIXED (fixed), mario_wid, x_pos, y_pos);
+    gtk_fixed_put (GTK_FIXED (fixed), barrel_freefall , x_cord_free, y_cord_free);
+    gtk_fixed_put (GTK_FIXED (fixed), barrel_normal , x_cord, y_cord);
+
+    //Vidas
+    life1 = xpm_create(window, "/home/karina/CLionProjects/untitled/imgs/life_white.png");
+    gtk_widget_show(life1);
+    gtk_fixed_put (GTK_FIXED (fixed), life1, 850, 20);
+
+    life2 = xpm_create(window, "/home/karina/CLionProjects/untitled/imgs/life_white.png");
+    gtk_widget_show(life2);
+    gtk_fixed_put (GTK_FIXED (fixed), life2, 900, 20);
+
+    life3 = xpm_create(window, "/home/karina/CLionProjects/untitled/imgs/life_white.png");
+    gtk_widget_show(life3);
+    gtk_fixed_put (GTK_FIXED (fixed), life3, 950, 20);
+}
+
 void game_over()
 {
     gtk_timeout_remove (timer);
@@ -345,28 +406,6 @@ void game_over()
     gtk_box_pack_start (GTK_BOX (box), pop_button, FALSE, FALSE, 5);
     gtk_container_add (GTK_CONTAINER (pop), box);
     gtk_widget_show_all(pop);
-}
-
-
-
-void set_score()
-{
-char score_arr[5],point[12];
-sprintf (score_arr, "%d", (int) score);
-char *lab="SCORE : ";
-strcpy(point,lab);
-strcat(point,score_arr);
-gtk_label_set(GTK_LABEL(label),&point);
-}
-
-void restart(GtkWidget *wid, GtkWidget *data)
-{
-gtk_widget_destroy(data);
-score=0;
-set_score();
-x_pos=0;
-y_pos=500;
-
 }
 
 

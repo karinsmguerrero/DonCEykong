@@ -38,7 +38,7 @@
         <entry file="file://$PROJECT_DIR$/Game.c">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="224">
-              <caret line="326" column="4" lean-forward="true" selection-start-line="326" selection-start-column="4" selection-end-line="327" selection-end-column="64" />
+              <caret line="270" lean-forward="true" selection-start-line="246" selection-end-line="270" />
               <folding>
                 <element signature="e#41#58#0" expanded="true" />
                 <element signature="e#4025#4279#0" />
@@ -54,7 +54,7 @@
         <entry file="file://$PROJECT_DIR$/DK.c">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="343">
-              <caret line="152" column="74" selection-start-line="152" selection-start-column="74" selection-end-line="152" selection-end-column="74" />
+              <caret line="381" column="54" selection-start-line="381" selection-start-column="54" selection-end-line="381" selection-end-column="54" />
             </state>
           </provider>
         </entry>
@@ -158,12 +158,12 @@
       <option name="presentableId" value="Default" />
       <updated>1560449310315</updated>
       <workItem from="1560449315998" duration="380000" />
-      <workItem from="1560450806584" duration="26187000" />
+      <workItem from="1560450806584" duration="27219000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26567000" />
+    <option name="totallyTimeSpent" value="27599000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="55" y="25" width="1311" height="743" extended-state="6" />
@@ -237,7 +237,7 @@
     <entry file="file://$PROJECT_DIR$/Game.c">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="224">
-          <caret line="326" column="4" lean-forward="true" selection-start-line="326" selection-start-column="4" selection-end-line="327" selection-end-column="64" />
+          <caret line="270" lean-forward="true" selection-start-line="246" selection-end-line="270" />
           <folding>
             <element signature="e#41#58#0" expanded="true" />
             <element signature="e#4025#4279#0" />
@@ -251,7 +251,7 @@
     <entry file="file://$PROJECT_DIR$/DK.c">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="343">
-          <caret line="152" column="74" selection-start-line="152" selection-start-column="74" selection-end-line="152" selection-end-column="74" />
+          <caret line="381" column="54" selection-start-line="381" selection-start-column="54" selection-end-line="381" selection-end-column="54" />
         </state>
       </provider>
     </entry>
