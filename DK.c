@@ -67,10 +67,10 @@ int fire_inginition(GtkWidget *data){
     }
 }
 
-int move_barrel_normal(GtkWidget *data)
-{
-    if((y_pos == 500 && y_cord == 525 || y_pos == 335 && y_cord == 365 ||  y_pos == 185 && y_cord < 205 || y_pos == 20 && y_cord == 54) && abs(x_cord - x_pos) == 1){
-        switch (lives){
+int move_barrel_normal(GtkWidget *data) {
+    //muere mario
+    if (y_pos == 500 && y_cord == 530 && x_pos == x_cord || y_pos == 335 && y_cord == 375 && x_pos == x_cord || y_pos == 185 && y_cord < 215 && x_pos == x_cord|| y_pos == 20 && y_cord == 55 && x_pos == x_cord) {
+        switch (lives) {
             case 3:
                 lives = 2;
                 gtk_widget_destroy(life1);
@@ -82,59 +82,78 @@ int move_barrel_normal(GtkWidget *data)
             case 1:
                 lives = 0;
                 gtk_widget_destroy(life3);
-                game_over();
                 break;
         }
     }
 
-    if(x_cord > 1000)
-    {
+    if (x_cord > 1000) {
         forward = 0;
         y_cord = 55;
         x_cord = 105;
 
-        gtk_fixed_put (GTK_FIXED (fixed), barrel_normal , x_cord, y_cord);
+        gtk_fixed_put(GTK_FIXED (fixed), barrel_normal, x_cord, y_cord);
     }
 
-    if(forward == 0){
-        if(x_cord > 870 && 54 < y_cord && y_cord < 215 ){
-            if(205 < y_cord && y_cord < 215)
+    if (forward == 0) {
+        if (x_cord > 870 && 54 < y_cord && y_cord < 215) {
+            if (205 < y_cord && y_cord < 215)
                 forward = 1;
             y_cord += 5;
             gtk_fixed_move(GTK_FIXED (fixed), barrel_normal, x_cord, y_cord);
-        }
-        else if(x_cord > 870 && 335 < y_cord && y_cord < 530 ){
-            if(525 < y_cord && y_cord < 530)
+        } else if (x_cord > 870 && 335 < y_cord && y_cord < 530) {
+            if (525 < y_cord && y_cord < 530)
                 forward = 1;
             y_cord += 5;
             gtk_fixed_move(GTK_FIXED (fixed), barrel_normal, x_cord, y_cord);
-        }
-        else {
+        } else {
             x_cord += 5;
             gtk_fixed_move(GTK_FIXED (fixed), barrel_normal, x_cord, y_cord);
         }
         return TRUE;
     } //backward
-    else{
-        if(x_cord < 100 && 209 < y_cord && y_cord < 380 ){
-            if(365 < y_cord && y_cord < 380)
+    else {
+        if (x_cord < 100 && 209 < y_cord && y_cord < 380) {
+            if (365 < y_cord && y_cord < 380)
                 forward = 0;
             y_cord += 5;
             gtk_fixed_move(GTK_FIXED (fixed), barrel_normal, x_cord, y_cord);
-        }
-        else {
+        } else {
             x_cord -= 5;
             gtk_fixed_move(GTK_FIXED (fixed), barrel_normal, x_cord, y_cord);
         }
         return TRUE;
     }
-
-
 }
 
 
 int move_barrel_freefall(GtkWidget *data)
 {
+    //muere mario
+    if (y_pos == 500 && y_cord == 530 && x_pos == x_cord || y_pos == 335 && y_cord == 375 && x_pos == x_cord || y_pos == 185 && y_cord < 215 && x_pos == x_cord|| y_pos == 20 && y_cord == 55 && x_pos == x_cord) {
+        switch (lives) {
+            case 3:
+                lives = 2;
+                gtk_widget_destroy(life1);
+                y_pos = 500;
+                x_pos = 0;
+                gtk_fixed_put(GTK_FIXED (fixed), mario_wid, x_pos, y_pos);
+                break;
+            case 2:
+                lives = 1;
+                gtk_widget_destroy(life2);
+                y_pos = 500;
+                x_pos = 0;
+                gtk_fixed_put(GTK_FIXED (fixed), mario_wid, x_pos, y_pos);
+                break;
+            case 1:
+                lives = 0;
+                gtk_widget_destroy(life3);
+                y_pos = 500;
+                x_pos = 0;
+                gtk_fixed_put(GTK_FIXED (fixed), mario_wid, x_pos, y_pos);
+                break;
+        }
+    }
     if(x_cord_free < 2)
     {
         forward_free = 0;
@@ -303,6 +322,30 @@ gint key_press_cb(GtkWidget *widget, GdkEventKey *kevent, gpointer data)  {
 }
 //**************************************************************
 
+void game_over()
+{
+    gtk_timeout_remove (timer);
+    GtkWidget *pop,*pop_lab,*pop_button,*box,*pop_play;
+    pop=gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_widget_set_usize(GTK_WIDGET(pop),250,250);
+    pop_lab=gtk_label_new(" ");
+    char status[100];
+    strcpy(status,"Game over! Final score : ");
+    char score_arr[5];
+    sprintf (score_arr, "%d", (int) score);
+    strcat(status,score_arr);
+    gtk_label_set(GTK_LABEL(pop_lab),&status);
+    pop_button=gtk_button_new_with_label("Exit!");
+    pop_play=gtk_button_new_with_label("Play Again!");
+    g_signal_connect(G_OBJECT(pop_button),"clicked",gtk_main_quit,NULL);
+    g_signal_connect(G_OBJECT(pop_play),"clicked",restart,pop);
+    box=gtk_vbox_new(TRUE,3);
+    gtk_box_pack_start (GTK_BOX (box),pop_lab, FALSE, FALSE, 5);
+    gtk_box_pack_start (GTK_BOX (box), pop_play, FALSE, FALSE, 5);
+    gtk_box_pack_start (GTK_BOX (box), pop_button, FALSE, FALSE, 5);
+    gtk_container_add (GTK_CONTAINER (pop), box);
+    gtk_widget_show_all(pop);
+}
 
 
 
@@ -326,30 +369,6 @@ y_pos=500;
 
 }
 
-void game_over()
-{
-  gtk_timeout_remove (timer);
-  GtkWidget *pop,*pop_lab,*pop_button,*box,*pop_play;
-  pop=gtk_window_new(GTK_WINDOW_TOPLEVEL);
-   gtk_widget_set_usize(GTK_WIDGET(pop),250,250);
-  pop_lab=gtk_label_new(" ");
-  char status[100];
-  strcpy(status,"Game over! Final score : ");
-  char score_arr[5];
-  sprintf (score_arr, "%d", (int) score);
-  strcat(status,score_arr);
-  gtk_label_set(GTK_LABEL(pop_lab),&status);
-  pop_button=gtk_button_new_with_label("Exit!");
-  pop_play=gtk_button_new_with_label("Play Again!");
-  g_signal_connect(G_OBJECT(pop_button),"clicked",gtk_main_quit,NULL);
-  g_signal_connect(G_OBJECT(pop_play),"clicked",restart,pop);
-  box=gtk_vbox_new(TRUE,3);
-  gtk_box_pack_start (GTK_BOX (box),pop_lab, FALSE, FALSE, 5);
-  gtk_box_pack_start (GTK_BOX (box), pop_play, FALSE, FALSE, 5);
-  gtk_box_pack_start (GTK_BOX (box), pop_button, FALSE, FALSE, 5);
-  gtk_container_add (GTK_CONTAINER (pop), box);
-  gtk_widget_show_all(pop);
-}
 
 
 
